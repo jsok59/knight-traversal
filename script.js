@@ -3,16 +3,15 @@ function knightMoves(startVertex, endVertex) {
 	const visited = [];
 	while (queue.length != 0) {
 		const node = queue.shift();
-		const adjacentNodes = getPossibleVertices(node.position, queue);
+		const adjacentNodes = getPossibleVertices(node, queue);
 		adjacentNodes.forEach((element) => {
 
 		})
 	}
 }
 
-function getPossibleVertices(startVertex, queue) {
-
-	const [row, col] = startVertex;
+function getPossibleVertices(node, queue) {
+	const [row, col] = node.position;
 	const rowDifference = [-1, -2, 1, 2];
 	for (const element of rowDifference) {
 		const vertexRow = element + row;
@@ -27,11 +26,16 @@ function getPossibleVertices(startVertex, queue) {
 			vertexCol2 = col - 1;
 		}
 
-		if (vertexCol1 >= 0 && vertexCol1 <= 7) queue.push({position: [vertexRow, vertexCol1], parentNode: startVertex});
-		if (vertexCol2 >= 0 && vertexCol2 <= 7) queue.push({position: [vertexRow, vertexCol2], parentNode: startVertex});
+		if (vertexCol1 >= 0 && vertexCol1 <= 7) queue.push({position: [vertexRow, vertexCol1], parentNode: node})
+		if (vertexCol2 >= 0 && vertexCol2 <= 7) queue.push({position: [vertexRow, vertexCol2], parentNode: node});
 	}
 
 	return queue;
+}
+
+
+function createNode(position, parentNode= null) {
+	return {position, parentNode}
 }
 
 console.log(getPossibleVertices([7, 7]));
