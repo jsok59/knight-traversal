@@ -1,13 +1,22 @@
 function knightMoves(startVertex, endVertex) {
-	const queue = [{position: startVertex, parentNode: null}]
+	let queue = [{ position: startVertex, parentNode: null }];
 	const visited = [];
+	let result = null;
 	while (queue.length != 0) {
 		const node = queue.shift();
-		const adjacentNodes = getPossibleVertices(node, queue);
-		adjacentNodes.forEach((element) => {
-
-		})
+		queue = getPossibleVertices(node, queue);
+		for (const element of queue) {
+			if (visited.includes(JSON.stringify(element))) continue;
+			if (element.position[0] === endVertex[0] && element.position[1] === endVertex[1]) {
+				result = element;
+				break;
+			}
+			visited.push(JSON.stringify(node.position));
+			queue = getPossibleVertices(element, queue);
+		}
+		if (result != null) break;
 	}
+	return result;
 }
 
 function getPossibleVertices(node, queue) {
@@ -26,16 +35,14 @@ function getPossibleVertices(node, queue) {
 			vertexCol2 = col - 1;
 		}
 
-		if (vertexCol1 >= 0 && vertexCol1 <= 7) queue.push({position: [vertexRow, vertexCol1], parentNode: node})
-		if (vertexCol2 >= 0 && vertexCol2 <= 7) queue.push({position: [vertexRow, vertexCol2], parentNode: node});
+		if (vertexCol1 >= 0 && vertexCol1 <= 7) queue.push({ position: [vertexRow, vertexCol1], parentNode: node });
+		if (vertexCol2 >= 0 && vertexCol2 <= 7) queue.push({ position: [vertexRow, vertexCol2], parentNode: node });
 	}
 
 	return queue;
 }
 
-
-function createNode(position, parentNode= null) {
-	return {position, parentNode}
-}
-
-console.log(getPossibleVertices([7, 7]));
+// function createNode(position, parentNode = null) {
+// 	return { position, parentNode };
+// }
+console.log(knightMoves([0, 0], [3, 3]));
