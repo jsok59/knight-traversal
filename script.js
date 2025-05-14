@@ -3,15 +3,14 @@ function knightMoves(startVertex, endVertex) {
 	const visited = [];
 	let result = null;
 	while (queue.length != 0) {
-		const node = queue.shift();
-		queue = getPossibleVertices(node, queue);
 		for (const element of queue) {
 			if (visited.includes(JSON.stringify(element))) continue;
 			if (element.position[0] === endVertex[0] && element.position[1] === endVertex[1]) {
 				result = element;
 				break;
 			}
-			visited.push(JSON.stringify(node.position));
+			visited.push(JSON.stringify(element.position));
+			queue.shift();
 			queue = getPossibleVertices(element, queue);
 		}
 		if (result != null) break;
